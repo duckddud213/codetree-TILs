@@ -77,7 +77,7 @@ public class Main {
             return !wall[x][y][nx][ny];
         }
         else{
-            if((dir == 1 || dir == 2)){
+            if((dir == 2 || dir == 4)){
                 if(wall[x][y][nx][y] || wall[nx][y][nx][ny]){
                     return true;
                 }
@@ -96,11 +96,11 @@ public class Main {
     public static void spread(){
         cooling = new int[N][N];
 
-        for(int i=0;i<N;i++){
-            for(int j=0;j<N;j++){
-                for(int d=2;d<6;d++){
-                    int nx = i + dx[0];
-                    int ny = j + dy[1];
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                for(int d = 2; d < 6; d++){
+                    int nx = i + dx[d];
+                    int ny = j + dy[d];
 
                     if(!isValid(nx,ny) || wall[i][j][nx][ny]){
                         continue;
@@ -146,14 +146,14 @@ public class Main {
     }
 
     public static void work(){
-        while(time <= 100){
+        while(time <= 100 && !checkOffice()){
             blowWind();
             spread();
             decreaseCoolness();
+            time++;
             if(checkOffice()){
                 return;
             }
-            time++;
         }
         time = -1;
     }
